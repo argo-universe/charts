@@ -1,0 +1,20 @@
+name: Helm Charts
+ 
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - feature-*
+
+jobs:
+  buildAndDeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Publish Microservice Chart
+        run: | 
+          echo ${{ secrets.GIT_PAT }} | docker login ghcr.io -u argo-universe --password-stdin
+          export CHART_VERSION=$(grep 'version:' ./path/to/Chart.yaml | tail -n1 | awk '{ print $2 }')
+          helm push microservice-${CHART_VERSION}.tgz oci://ghcr.io/argo-universe
