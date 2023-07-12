@@ -1,14 +1,10 @@
 name: Helm Charts
  
-on:
-  push:
-    branches:
-      - main
-      - dev
-      - feature-*
+on: workflow_call
+
 
 jobs:
-  buildAndDeploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
